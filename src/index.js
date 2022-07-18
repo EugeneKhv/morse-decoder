@@ -36,15 +36,13 @@ const MORSE_TABLE = {
     '----.':  '9',
     '-----':  '0',
 };
-
 function decode(expr) {
-    let array = expr.match(/.{1,10}/g).map(item=> item.replace(/^0*/g, '').replace(/11/g, '-').replace(/10/g, '.'));
-    for (let j = 0; j < array.length; j++) {
-            for (let item in MORSE_TABLE) {
-                if (array[j] == item) array[j] = MORSE_TABLE[item];
+    return expr.match(/.{1,10}/g).map(item=> item.replace(/^0*/g, '').replace(/11/g, '-').replace(/10/g, '.').replace(/\*+/g, ' ')).map(item=>{
+         for (let val in MORSE_TABLE) {
+                if (item == val) item = MORSE_TABLE[val];
             }
-        }
-    return array.join('').replace(/\*+/g, ' ')
+            return item;
+    }).join('');   
 }
 
 module.exports = {
